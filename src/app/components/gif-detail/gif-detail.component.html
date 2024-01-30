@@ -1,0 +1,28 @@
+  <div class="modal">
+    <div class="modal-content">
+      <div class="header text-center">
+        <h2>GIF Details</h2> 
+        <span class="close-icon" (click)="closeModal(true)"><img src="assets/close.svg" /></span>
+      </div>
+      <div class="details">
+        <div class="left-half align-left">
+          <div class="">
+            <p><strong>Title:</strong> {{ gifDetails.title }}</p>
+            <p><strong>Rating:</strong> {{ gifDetails.rating }}</p>
+          </div>
+          <div *ngIf="gifDetails.user" class="">
+            <p><strong>Username:</strong> {{ gifDetails.user.username }}</p>
+            <p><strong>Display Name:</strong> {{ gifDetails.user.display_name }}</p>
+          </div>
+          <div class="section">
+            <p><strong>URL:</strong> <a href="{{gifDetails.url}}" target="_blank">{{gifDetails.url}}</a></p>
+          </div>
+        </div>
+        <div class="right-half">
+          <div class="section">
+            <img [src]="gifDetails.images.downsized_large.url" alt="GIF Image" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,36 @@
+
+
+<div (click)="openDetails(gif)" class="image-container">
+  <picture>
+    <source [srcset]="gif.images.downsized_medium.url" type="image/webp" />
+  <img
+    [src]="gif.images.downsized_medium.url"
+    [alt]="gif.title || 'No name'"
+    class="card-img-top animate__animated animate__fadeIn"
+    (load)="onLoad()"
+    [ngStyle]="{ display: hasLoaded ? '' : 'none' }"
+  />
+  </picture>
+  <div class="image-text">
+    <span *ngIf="gif.user">
+      <img class="user-icon" [src]="gif.user.avatar_url"/>
+    </span>
+    <span class="ml-2">{{ gif.user ? gif.user.display_name || gif.user.username : gif.title }}</span>
+    <!-- <span>{{ gif.user ? (<img src="assets/verified" />) : '' }}</span> -->
+    <span class="ml-2" *ngIf="gif.user">
+      <img src="assets/verified.svg" />
+    </span>
+  </div>
+
+  <img
+    *ngIf="!hasLoaded"
+    src="assets/loader.svg"
+    height="100"
+    width="100"
+    class="mt-3"
+  />
+</div>
+
+<app-gif-detail (onCloseClick)="onCloseClick($event)" *ngIf="isDetailsVisible"
+[gifDetails]="selectedGif"
+></app-gif-detail>

@@ -1,0 +1,25 @@
+.image-text {
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  display: none;
+  color: white;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(18, 18, 18, 0.6));
+  }
+  
+  .image-container:hover .image-text {
+    display: inline-flex;
+  }
+
+  .user-icon {
+    width: 2rem;
+    height: 2rem;
+  }
