@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { environment } from '../environment/environment';
+import { environment } from '../../environment/environment';
 import { SearchResponse } from '../interfaces/gifs.interfaces';
 
 @Injectable()
