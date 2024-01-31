@@ -3,6 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { GifService } from '../../services/gif-service.service';
 import { GifComponent } from "../gif/gif.component";
+import { Gif } from '../../interfaces/gifs.interfaces';
 
 @Component({
     selector: 'app-gif-list',
@@ -13,17 +14,17 @@ import { GifComponent } from "../gif/gif.component";
 })
 export class GifListComponent {
 
-  gifs: any[] = [];
-  trendingSearches: any[] = [];
+  gifs: Gif[] = [];
+  trendingSearches: string[] = [];
   @Output() onSearchClick = new EventEmitter()
-  subscription: any = new Subscription;
+  subscription = new Subscription;
 
   constructor(private gifsService: GifService) { }
 
   ngOnInit(): void {
     this.gifsService.getTrendingGifs()
-    this.subscription = this.gifsService.getGifs()
-    .subscribe((response: any)=>{
+    this.subscription = this.gifsService.getGifSubject()
+    .subscribe((response)=>{
       this.gifs = response
     })
     this.getTrendingSearches()
@@ -35,8 +36,8 @@ export class GifListComponent {
 
   getTrendingSearches() {
     this.gifsService.getTrendingSearches()
-    this.subscription = this.gifsService.getGifs1()
-    .subscribe((response: any) => {
+    this.subscription = this.gifsService.getTrendingSearchesSubject()
+    .subscribe((response) => {
       this.trendingSearches = response;
     })
   }

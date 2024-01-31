@@ -16,7 +16,7 @@ export class GifSearchBoxComponent {
   search(){
     if(this.searchTerm !== ''){
       this.gifService.searchGifs(this.searchTerm)
-      this.gifService.getGifs().subscribe((response: any)=>{
+      this.gifService.getGifSubject().subscribe((response)=>{
         this.gifs = response.data
       })
     }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Gif } from '../../../interfaces/gifs.interfaces';
+import { Subject } from 'rxjs/internal/Subject';
+import { throttleTime } from 'rxjs/internal/operators/throttleTime';
 
 @Component({
   selector: 'shared-lazy-image',
@@ -8,7 +10,7 @@ import { Gif } from '../../../interfaces/gifs.interfaces';
 })
 export class LazyImageComponent implements OnInit {
 
-  selectedGif: any; // Holds the currently selected GIF
+  selectedGif!: Gif; // Holds the currently selected GIF
   isDetailsVisible: boolean = false;
 
   @Input()
@@ -16,16 +18,20 @@ export class LazyImageComponent implements OnInit {
 
   public hasLoaded: boolean = false;
 
+  private loadSubject = new Subject<void>();
+
 
   ngOnInit(): void {
-    if ( !this.gif.url ) throw new Error('URL property is required');
+    this.loadSubject.pipe(throttleTime(200)).subscribe(() => {
+      this.hasLoaded = true;
+    });
   }
 
   onLoad() {
-    this.hasLoaded = true;
+    this.loadSubject.next();
   }
 
-  openDetails(gif: any): void {
+  openDetails(gif: Gif): void {
     this.selectedGif = gif;
     this.isDetailsVisible = true;
   }

@@ -2,38 +2,39 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { environment } from '../environment/environment';
+import { SearchResponse } from '../interfaces/gifs.interfaces';
 
 @Injectable()
 export class GifService {
 
-  gifs = new BehaviorSubject<any>([]);
-  gifs1 = new BehaviorSubject<any>([]);
+  gifSubject = new BehaviorSubject<any>([]);
+  trendingSearchesSubject = new BehaviorSubject<any>([]);
 
 
   constructor(private http: HttpClient) { }
 
   getTrendingGifs(){
-    return this.http.get(`https://api.giphy.com/v1/gifs/trending?api_key=${environment.giphyApiKey}&limit=25`)
-    .subscribe((response: any) =>{
-      this.gifs.next(response.data);
+    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/trending?api_key=${environment.giphyApiKey}&limit=25`)
+    .subscribe(response =>{
+      this.gifSubject.next(response.data);
     });
   }
   getTrendingSearches(){
-    return this.http.get(`https://api.giphy.com/v1/trending/searches?api_key=${environment.giphyApiKey}`)
-    .subscribe((response: any) =>{
-      this.gifs1.next(response.data);
+    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/trending/searches?api_key=${environment.giphyApiKey}`)
+    .subscribe((response) =>{
+      this.trendingSearchesSubject.next(response.data);
     });
   }
   searchGifs(gifname :string){
-    return this.http.get(`https://api.giphy.com/v1/gifs/search?q=${gifname}&api_key=${environment.giphyApiKey}&limit=25`)
-    .subscribe((response: any) =>{
-      this.gifs.next(response.data);
+    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/search?q=${gifname}&api_key=${environment.giphyApiKey}&limit=25`)
+    .subscribe((response) =>{
+      this.gifSubject.next(response.data);
     });
   }
-  getGifs(){
-    return this.gifs.asObservable();
+  getGifSubject(){
+    return this.gifSubject.asObservable();
   }
-  getGifs1(){
-    return this.gifs1.asObservable();
+  getTrendingSearchesSubject(){
+    return this.trendingSearchesSubject.asObservable();
   }
 }
