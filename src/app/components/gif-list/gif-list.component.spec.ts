@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GifListComponent } from './gif-list.component';
+import { GifService } from '../../services/gif-service.service';
 
 describe('GifListComponent', () => {
   let component: GifListComponent;
@@ -8,7 +10,8 @@ describe('GifListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GifListComponent]
+      imports: [GifListComponent, HttpClientTestingModule],
+      providers: [GifService]
     })
     .compileComponents();
     
