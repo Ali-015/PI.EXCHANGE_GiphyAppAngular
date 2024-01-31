@@ -1,4 +1,11 @@
-<div infiniteScroll class="card-columns">
+<div class="trending-searches mt-4">
+  <h2>Trending Searches</h2>
+  <div (click)="searchClick(search)" *ngFor="let search of trendingSearches" class="trending-search">
+    {{ search }}
+  </div>
+</div>
+<h1 class="text-center mt-4 mb-4">Trending Gifs</h1>
+<div class="card-columns">
     <app-gif *ngFor="let gif of gifs; index as i"
       [gif]="gif">
     </app-gif>

@@ -32,7 +32,7 @@ export interface Onclick {
 }
 
 export interface Images {
-  original:                 { [key: string]: string };
+  original:                 The480_WStill;
   downsized:                The480_WStill;
   downsized_large:          The480_WStill;
   downsized_medium:         The480_WStill;

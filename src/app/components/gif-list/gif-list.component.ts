@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { GifService } from '../../services/gif-service.service';
 import { GifComponent } from "../gif/gif.component";
@@ -14,6 +14,8 @@ import { GifComponent } from "../gif/gif.component";
 export class GifListComponent {
 
   gifs: any[] = [];
+  trendingSearches: any[] = [];
+  @Output() onSearchClick = new EventEmitter()
   subscription: any = new Subscription;
 
   constructor(private gifsService: GifService) { }
@@ -23,6 +25,19 @@ export class GifListComponent {
     this.subscription = this.gifsService.getGifs()
     .subscribe((response: any)=>{
       this.gifs = response
+    })
+    this.getTrendingSearches()
+  }
+
+  searchClick(val : string) {
+    this.onSearchClick.emit(val);
+  }
+
+  getTrendingSearches() {
+    this.gifsService.getTrendingSearches()
+    this.subscription = this.gifsService.getGifs1()
+    .subscribe((response: any) => {
+      this.trendingSearches = response;
     })
   }
 

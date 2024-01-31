@@ -2,3 +2,23 @@
     max-width: 250px;
     max-height: 500px;
   }
+
+  .trending-searches {
+    display: inline-block;
+  // margin: 5px;
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  }
+
+  .trending-search:hover {
+    background-color: #2980b9;
+  }
+  
+  .trending-search {
+    display: inline-block;
+    margin-right: 10px; /* Optional: Add some spacing between items */
+  }

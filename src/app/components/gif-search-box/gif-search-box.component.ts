@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GifService } from '../../services/gif-service.service';
 import { Gif } from '../../interfaces/gifs.interfaces';
 
@@ -10,15 +10,19 @@ import { Gif } from '../../interfaces/gifs.interfaces';
 export class GifSearchBoxComponent {
 
   gifs: Gif[] = [];
+  @Input() searchTerm! : string;
   constructor(private gifService: GifService) { }
 
   search(searchTerm: string){
     if(searchTerm !== ''){
       this.gifService.searchGifs(searchTerm)
       this.gifService.getGifs().subscribe((response: any)=>{
-        console.log(response);
         this.gifs = response.data
       })
     }
+  }
+
+  ngOnChanges() {
+    this.search(this.searchTerm);
   }
 }

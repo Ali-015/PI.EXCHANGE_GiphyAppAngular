@@ -14,4 +14,9 @@ import { GifListComponent } from "./components/gif-list/gif-list.component";
 })
 export class AppComponent {
   title = 'GiphyApp';
+  searchTerm : string = ""
+
+  searchClick(val: string) {
+    this.searchTerm = val;
+  }
 }
