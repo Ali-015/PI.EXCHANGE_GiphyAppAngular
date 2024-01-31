@@ -4,13 +4,14 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { GifService } from '../../services/gif-service.service';
 import { GifComponent } from "../gif/gif.component";
 import { Gif } from '../../interfaces/gifs.interfaces';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-gif-list',
   standalone: true,
   templateUrl: './gif-list.component.html',
   styleUrl: './gif-list.component.scss',
-  imports: [GifComponent, CommonModule]
+  imports: [GifComponent, CommonModule, InfiniteScrollModule]
 })
 export class GifListComponent {
 
@@ -23,11 +24,13 @@ export class GifListComponent {
   // Subscription to manage the lifecycle of observable subscriptions
   subscription = new Subscription;
 
+  offset = 0
+
   constructor(private gifsService: GifService) { }
 
   ngOnInit(): void {
     // Fetch trending GIFs on component initialization
-    this.gifsService.getTrendingGifs()
+    this.gifsService.getTrendingGifs(this.offset)
 
     // Subscribe to the trending GIFs data
     this.subscription = this.gifsService.getGifSubject()
@@ -54,6 +57,19 @@ export class GifListComponent {
       .subscribe((response) => {
         // Update the component's trendingSearches property with the new data
         this.trendingSearches = response;
+      })
+  }
+
+  onScroll() {
+    console.log('scrolled')
+    this.offset +=50;
+    this.gifsService.getTrendingGifs(this.offset)
+
+    // Subscribe to the trending GIFs data
+    this.subscription = this.gifsService.getGifSubject()
+      .subscribe((response) => {
+        // Apped the component's gifs property with the new data
+        this.gifs.push(...response)
       })
   }
 

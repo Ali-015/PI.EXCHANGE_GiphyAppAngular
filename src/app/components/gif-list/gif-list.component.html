@@ -5,7 +5,10 @@
   </div>
 </div>
 <h1 class="text-center mt-4 mb-4">Trending Gifs</h1>
-<div class="card-columns">
+<div infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="1000"
+(scrolled)="onScroll()" class="card-columns">
     <app-gif *ngFor="let gif of gifs; index as i"
       [gif]="gif">
     </app-gif>

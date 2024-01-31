@@ -15,8 +15,8 @@ export class GifService {
   constructor(private http: HttpClient) { }
 
   // Fetches trending GIFs data from the Giphy API
-  getTrendingGifs() {
-    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/trending?api_key=${environment.giphyApiKey}&limit=25`)
+  getTrendingGifs(offset: number) {
+    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/trending?api_key=${environment.giphyApiKey}&limit=50&offset=${offset}`)
       .subscribe(response => {
         // Updates gifSubject with the new trending GIFs data
         this.gifSubject.next(response.data);
@@ -34,7 +34,7 @@ export class GifService {
 
   // Searches for GIFs based on a given name using the Giphy API
   searchGifs(gifname: string) {
-    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/search?q=${gifname}&api_key=${environment.giphyApiKey}&limit=25`)
+    return this.http.get<SearchResponse>(`https://api.giphy.com/v1/gifs/search?q=${gifname}&api_key=${environment.giphyApiKey}&limit=50`)
       .subscribe((response) => {
         // Updates gifSubject with the new search results
         this.gifSubject.next(response.data);
