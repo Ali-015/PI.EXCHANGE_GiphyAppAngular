@@ -13,9 +13,9 @@ export class GifSearchBoxComponent {
   @Input() searchTerm! : string;
   constructor(private gifService: GifService) { }
 
-  search(searchTerm: string){
-    if(searchTerm !== ''){
-      this.gifService.searchGifs(searchTerm)
+  search(){
+    if(this.searchTerm !== ''){
+      this.gifService.searchGifs(this.searchTerm)
       this.gifService.getGifs().subscribe((response: any)=>{
         this.gifs = response.data
       })
@@ -23,6 +23,6 @@ export class GifSearchBoxComponent {
   }
 
   ngOnChanges() {
-    this.search(this.searchTerm);
+    this.search();
   }
 }
